@@ -13,47 +13,24 @@ namespace Sword
         {
             SwordDamage swordDamage = new SwordDamage();
             Random random = new Random();
+            while (true)
+            {
+                Console.Write("0 for no magic/flaming, 1 for magic," +
+                    "2 for flaming, 3 for both, anything else to quit: ");
+                char key = Console.ReadKey().KeyChar;
+                if (key != '0' && key != '1' && key != '2' && key != '3')
+                {
+                    return  ;
+                }
+                int roll = random.Next(1,7)+random.Next(1,7)+random.Next(1,7);
+                swordDamage.Roll = roll;
+                swordDamage.SetMagic(key == '1' || key == '3');
+                swordDamage.SetFlaming(key == '2' || key == '3');
+                Console.WriteLine("\nRolled " + roll+ " for " + swordDamage.Damage + " HP\n");
+            }
 
-            int diceRoll = 0;
-            for (int i = 0; i < 3; i++)
-            {
-                diceRoll += random.Next(1, 7);
-            }
-            Console.WriteLine("dice roll: " + diceRoll);
-            swordDamage.Roll = diceRoll;
-
-            Console.WriteLine("enter which sword: 0 for no magic/flaming," +
-                " 1 for magic,2 for flaming, 3 for both," +
-                " anything else to quit");
-
-            int whichSword = int.Parse(Console.ReadLine());
-            if (whichSword == 0)
-            {
-                swordDamage.CalculateDamage();
-                Console.WriteLine($"Rolled for {swordDamage.Damage} HP");
-                
-            }
-            else if (whichSword == 1)
-            {
-                swordDamage.SetMagic(true);
-                Console.WriteLine($"Rolled for {swordDamage.Damage} HP");
-            }
-            else if (whichSword == 2)
-            {
-                swordDamage.SetFlaming(true);
-                Console.WriteLine($"Rolled for {swordDamage.Damage} HP");
-            }
-            else if (whichSword == 3)
-            {
-                swordDamage.SetMagic(true);
-                swordDamage.SetFlaming(true);
-                Console.WriteLine($"Rolled for {swordDamage.Damage} HP");
-            }
-            else
-            {
-                Console.WriteLine("please, enter correct number");
-                return;
-            }
+            
+            
 
         }
     }
